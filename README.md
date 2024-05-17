@@ -1,1 +1,1 @@
-# moodle-local_webinstall
+# moodle-webinstall
