@@ -45,11 +45,7 @@ jobs:
           coverage: none
 
       - name: Clone Moodle repository
-        uses: actions/checkout@v2
-        with:
-          repository: moodle/moodle
-          ref: main
-          path: moodle
+        run: git clone https://git.in.moodle.com/moodle/integration.git moodle
 
       - name: Clone Plugin repository
         uses: actions/checkout@v2
