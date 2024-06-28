@@ -2,12 +2,13 @@ name: Moodle web installation testing
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    inputs:
+      repository:
+        description: 'Repository to clone'
+        required: true
+      branch:
+        description: 'Branch to clone'
+        required: true
 
 env:
   php: 8.2
@@ -25,6 +26,11 @@ jobs:
       DB_PASS: test
 
     steps:
+      - name: Print repository and branch
+        run: |
+          echo "Repository: ${{ github.event.inputs.repository }}"
+          echo "Branch: ${{ github.event.inputs.branch }}"
+
       - name: Setting up DB PostgreSQL
         uses: m4nu56/postgresql-action@v1
         with:
@@ -52,8 +58,16 @@ jobs:
           ini-values: max_input_vars=5000
           coverage: none
 
-      - name: Clone Moodle repository
-        run: git clone https://git.in.moodle.com/moodle/integration.git moodle
+#      - name: Clone Moodle repository
+#        run: git clone https://git.in.moodle.com/moodle/integration.git moodle
+#      - name: Clone moodle site repository and branch
+#        uses: actions/checkout@v4
+#        with:
+#          repository: ${{ github.event.inputs.repository }}
+#          ref: ${{ github.event.inputs.branch }}
+#          path: moodle
+      - name: Clone moodle site repository and branch
+        run: git clone -b ${{ github.event.inputs.branch }} ${{ github.event.inputs.repository }} moodle
 
       - name: Clone Plugin repository
         uses: actions/checkout@v4
