@@ -16,6 +16,14 @@ jobs:
   behat:
     runs-on: ubuntu-latest
 
+    env:
+      MOODLE_SITE_URL: http://localhost:8080/moodle
+      DB_TYPE: pgsql
+      DB_HOST: localhost
+      DB_NAME: test
+      DB_USER: test
+      DB_PASS: test
+
     steps:
       - name: Setting up DB PostgreSQL
         uses: m4nu56/postgresql-action@v1

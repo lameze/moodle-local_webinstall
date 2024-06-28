@@ -1,7 +1,7 @@
 Feature: Moodle Web Installation
 
   Scenario: Verify successful installation of Moodle
-    Given I am on "http://localhost:8080/moodle"
+    Given I am on the moodle site to be installed
 
     # First page: Choose a language
     And I should see "Installation"
@@ -14,21 +14,20 @@ Feature: Moodle Web Installation
     And I press "Next"
 
     # Choose database driver
-    And I fill in "dbtype" with "pgsql"
+    And I fill in the database type
     And I press "Next"
 
     # Database settings
-    When I fill in "dbhost" with "localhost"
-    When I fill in "dbname" with "test"
-    When I fill in "dbuser" with "test"
-    When I fill in "dbpass" with "test"
+    And I fill in the database settings
     And I press "Next"
 
-    # Configuration completed: --> We only see this part if Moodle could not save the config.php
+    # Configuration completed: --> Only needed if Moodle could not save the config.php
     # And I should see "Configuration completed"
     # And I press "Next"
 
     # Installation
+    And I should see "Installation"
+    And I should see "Modular Object-Oriented Dynamic Learning Environment"
     And I should see "Have you read these conditions and understood them?"
     And I press "Continue"
 
@@ -50,7 +49,7 @@ Feature: Moodle Web Installation
     And I fill in "s__shortname" with "sitetest"
     And I fill in "s__supportemail" with "admin@moodle.com"
     And I fill in "s__noreplyaddress" with "admin@moodle.com"
-    And I press "Save changes"
+    When I press "Save changes"
 
     # Installation finished.
-    And I should see "Welcome, admin!"
+    Then I should see "Welcome, admin!"
